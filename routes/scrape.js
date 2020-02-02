@@ -3,7 +3,7 @@ var axios = require("axios");
 
 
 // =========== Function that scrapes NYTimes site ===========
-var scrapedNYtimes = function () {
+var scrapedNYtimes = function (db) {
 
     return axios.get("http://www.nytimes.com").then(function (response) {
         var $ = cheerio.load(response.data);
@@ -30,11 +30,13 @@ var scrapedNYtimes = function () {
             var title = $(element).find("h2").text();
 
             // Grab the URL of the article
-            var link = $(element).children("a").attr("href");
+            var link = $(element).find("a").attr("href");
 
             // Grab the summary of the article
             var sum = $(element).find("p").text();
 
+
+            console.log("Title:" + title, "Link:" + link, "Sum:" + sum);
             // If this found element had both a title and a link
             if (title && link && sum) {
                 // Insert the data in the scrapedData db
@@ -54,12 +56,12 @@ var scrapedNYtimes = function () {
                         }
                     });
             }
-
-
-        }
         });
-});
+    });
 };
+
+// for testing!!!!!
+// scrapedNYtimes(db);
 
 
 module.exports = scrapedNYtimes;

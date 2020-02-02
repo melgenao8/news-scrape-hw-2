@@ -1,21 +1,38 @@
-// We'll be rewriting the table's data frequently, so let's make our code more DRY
-// by writing a function that takes in 'articles' (JSON) and creates a table body
 function displayResults(articles) {
-    // First, empty the table
-    $("tbody").empty();
+    // empty the table
+    $("#cards").empty();
 
     // Then, for each entry of that json...
     articles.forEach(function (article) {
         // Append each of the article's properties to the table
-        var tr = $("<tr>").append(
-            $("<td>").text(article.title),
-            $("<td>").text(article.link),
-            $("<td>").text(article.sum),
-        );
+        var card = $("<div>").addClass("card");
+        var cardHeader = $("<div>").addClass("card-header");
+        var cardLink = $("<a>").addClass("article-link");
+        var header = $("<h3>");
+        var cardBody = $("<div>").addClass("card-body");
+        var button = $("<a>").addClass("btn btn-success save").text("Save Article");
 
-        $("tbody").append(tr);
+        button.on("click", savedArticle);
+
+        cardBody.text(article.sum);
+        cardLink.attr("href", "https://www.nytimes.com/" + article.link);
+        cardLink.text(article.title)
+        header.append(cardLink, button);
+        cardHeader.append(header);
+        card.append(cardHeader, cardBody);
+
+        $("#cards").append(card);
+
     });
 }
+
+function savedArticle() {
+    var body = $(this).parent().parent().siblings(".card-body").html();
+    var title = $(this).siblings(".article-link").text();
+
+    alert(title);
+}
+
 
 // Bonus function to change "active" header
 function setActive(selector) {
@@ -23,14 +40,19 @@ function setActive(selector) {
     $("th").removeClass("active");
     $(selector).addClass("active");
 }
+$(".btn-success").on("click", function () {
+    alert("Test");
+})
+
 
 // 1: On Load
 // ==========
 
 // First thing: ask the back end for json with all articles
-$.getJSON("/all", function (data) {
+$.get("/all", function (data) {
     // Call our function to generate a table body
     displayResults(data);
+    console.log(data);
 });
 
 // 2: Button Interactions
@@ -63,7 +85,7 @@ $("#savedButton").on("click", function () {
 
 // DELETE ARTICLES button --> deletes ALL articles
 $("#clearArticlesButton").on("click", function () {
-  
+
     // Do an api call to the back end for json with all articles sorted by name
     $.getJSON("/", function (data) {
         // Call our function to generate a table body
