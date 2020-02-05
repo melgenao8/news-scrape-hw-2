@@ -69,6 +69,7 @@ app.get("/all", function (req, res) {
 });
 
 // Retrieve data from the db
+// comment
 app.get("/scrape", function (req, res) {
     // refer to scrape.js
     axios.get("http://www.nytimes.com").then(function (response) {
