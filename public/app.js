@@ -48,6 +48,12 @@ $(".btn-success").on("click", function () {
 // 1: On Load
 // ==========
 
+$.get("/scrape", function (data) {
+    // Call our function to generate a table body
+    //displayResults(data);
+    console.log(data);
+});
+
 // First thing: ask the back end for json with all articles
 $.get("/all", function (data) {
     // Call our function to generate a table body
@@ -58,17 +64,6 @@ $.get("/all", function (data) {
 // 2: Button Interactions
 // ======================
 
-// // user clicks the SCRAPE NEW ARTICLES button --> display table
-// $("#scrapeNewButton").on("click", function () {
-//     // Set new column as currently-sorted (active)
-//     // setActive("#article-weight");
-
-//     // Do an api call to the back end for json with all articles
-//     $.getJSON("/articles", function (data) {
-//         // Call our function to generate a table body
-//         displayResults(data);
-//     });
-// });
 
 // user clicks the SAVED ARTICLES button --> display saved articles in table
 $("#savedButton").on("click", function () {
