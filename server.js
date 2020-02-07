@@ -19,24 +19,18 @@ var databaseUrl = "NYTscraper";
 var collections = ["NYTscrapedData"];
 
 // Hook mongojs configuration to the db variable
-// var db = mongojs(databaseUrl, collections);
-// db.on("error", function (error) {
-//     console.log("Database Error:", error);
-// });
+var db = mongojs(databaseUrl, collections);
+db.on("error", function (error) {
+    console.log("Database Error:", error);
+});
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 }
 
 // Connect to the Mongo DB
-// var url = process.env.MONGODB_URI || "mongodb://localhost/" + databaseUrl
-// mongoose.connect(url, function (err, db) {
-//     if (err) throw err;
-//     db.close();
-// });
-
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/" + databaseUrl;
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+var url = process.env.MONGODB_URI || "mongodb://localhost/" + databaseUrl
+mongoose.connect(url)
 
 
 // Define middleware here
@@ -72,7 +66,6 @@ app.get("/all", function (req, res) {
 });
 
 // Retrieve data from the db
-// comment
 app.get("/scrape", function (req, res) {
     // refer to scrape.js
     axios.get("http://www.nytimes.com").then(function (response) {
@@ -138,6 +131,8 @@ app.get("/scrape", function (req, res) {
         });
 
         // res.json({ "status": "Successful 200" });
+    }).catch(err => {
+        console.log(err)
     });
 });
 
