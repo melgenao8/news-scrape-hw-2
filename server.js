@@ -18,15 +18,15 @@ var app = express();
 var databaseUrl = "NYTscraper";
 var collections = ["NYTscrapedData"];
 
-// Hook mongojs configuration to the db variable
-var db = mongojs(databaseUrl, collections);
-db.on("error", function (error) {
-    console.log("Database Error:", error);
-});
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
-}
+// // Hook mongojs configuration to the db variable
+// var db = mongojs(databaseUrl, collections);
+// db.on("error", function (error) {
+//     console.log("Database Error:", error);
+// });
+// // Serve up static assets (usually on heroku)
+// if (process.env.NODE_ENV === "production") {
+//     app.use(express.static("client/build"));
+// }
 
 // Connect to the Mongo DB
 var url = process.env.MONGODB_URI || "mongodb://localhost/" + databaseUrl
@@ -40,10 +40,10 @@ app.use(express.json());
 
 // ROUTES
 
-app.get("/app.js", function (req, res) {
-    // console.log(res);
-    res.sendFile(path.join(__dirname, "./public/app.js"));
-});
+// app.get("/app.js", function (req, res) {
+//     // console.log(res);
+//     res.sendFile(path.join(__dirname, "./public/app.js"));
+// });
 
 app.get("/", function (req, res) {
     // console.log(res);
