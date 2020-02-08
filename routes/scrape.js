@@ -2,85 +2,29 @@ var cheerio = require("cheerio");
 var axios = require("axios");
 
 
-// =========== Function that scrapes NYTimes site ===========
-var scrapedNYtimes = function (db) {
+// =========== Function that scrapes NYTimes site ===========\
+var scraped = function (cb) {
+    requestAnimationFrame("http://www.nytimes.com", function (err, res, body) {
+        var$ = cherrio.load(body);
+        var articles = [];
+        $(".theme-summary").each(function (i, element) {
+            var head = $(this).children(".story-headling").text().trim;
+            var sum = $(this).children(".summary").text().trim();
 
-    return axios.get("http://www.nytimes.com").then(function (response) {
-        var $ = cheerio.load(response.data);
+            if (head && sum) {
+                var headNeat = head.replace(/(\r\n|\n|\n|r|\t|\s+)/gm, " ").trim();
+                var sumNeat = sum.replace(/(\r\n|\n|\n|r|\t|\s+)/gm, " ").trim();
 
-        console.log("\n***********************************\n" +
-            "Grabbing the latest articles" +
-            "from New York Times" +
-            "\n***********************************\n");
+                var dataToAdd = {
+                    headline: headNeat,
+                    summary: sumNeat
+                };
 
-
-        // Save scrapped articles in this empty array
-        // var articles = [];
-
-
-        $(".css-8atqhb").each(function (i, element) {
-
-
-            // ============================================
-            // Headline - the title of the article
-            // Summary - a short summary of the article
-            // URL - the url to the original article
-
-            //  HEADLINE
-            var title = $(element).find("h2").text();
-
-            // Grab the URL of the article
-            var link = $(element).find("a").attr("href");
-
-            // Grab the summary of the article
-            var sum = $(element).find("p").text();
-
-
-            console.log("Title:" + title, "Link:" + link, "Sum:" + sum);
-            // If this found element had both a title and a link
-            if (title && link && sum) {
-                // Insert the data in the scrapedData db
-                db.NYTscrapedData.insert({
-                    title: title,
-                    link: link,
-                    sum: sum
-                },
-                    function (err, inserted) {
-                        if (err) {
-                            // Log the error if one is encountered during the query
-                            console.log(err);
-                        }
-                        else {
-                            // Otherwise, log the inserted data
-                            console.log(inserted);
-                        }
-                    });
+                articles.push(dataToAdd);
             }
         });
+
+        cb(articles);
     });
 };
-
-// for testing!!!!!
-// scrapedNYtimes(db);
-
-
-module.exports = scrapedNYtimes;
-
-
-// ??????????????? does this go in server.js file?
-
-//  // saving info I scraped into new variables
-//  var headInfo = title
-//  var sumInfo = sum
-//  var urlInfo = link
-
-//  // ============================================
-
-//  // create object --> push this object into ARTICLE array
-//  var collectedData = {
-//      headline: headInfo,
-//      summary: sumInfo,
-//      url: "https://www.nytimes.com" + urlInfo
-//  };
-//  // pushing New articles into ARTICLE array
-//  collectedData.push(articles);
+module.exports = scrape;

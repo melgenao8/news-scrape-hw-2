@@ -16,7 +16,7 @@ function displayResults(articles) {
 
         cardBody.text(article.sum);
         cardLink.attr("href", "https://www.nytimes.com/" + article.link);
-        cardLink.text(article.title)
+        cardLink.text(article.headline)
         header.append(cardLink, button);
         cardHeader.append(header);
         card.append(cardHeader, cardBody);
@@ -28,9 +28,9 @@ function displayResults(articles) {
 
 function savedArticle() {
     var body = $(this).parent().parent().siblings(".card-body").html();
-    var title = $(this).siblings(".article-link").text();
+    var headline = $(this).siblings(".article-link").text();
 
-    alert(title);
+    alert(headline);
 }
 
 

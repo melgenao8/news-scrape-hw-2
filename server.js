@@ -10,40 +10,38 @@ var path = require("path");
 
 var PORT = process.env.PORT || 3000;
 
+// app.use(express.static('public'))
 
 // Initialize Express
 var app = express();
-
-// Database configuration
-var databaseUrl = "NYTscraper";
-var collections = ["NYTscrapedData"];
-
-// // Hook mongojs configuration to the db variable
-// var db = mongojs(databaseUrl, collections);
-// db.on("error", function (error) {
-//     console.log("Database Error:", error);
-// });
-// // Serve up static assets (usually on heroku)
-// if (process.env.NODE_ENV === "production") {
-//     app.use(express.static("client/build"));
-// }
-
-// Connect to the Mongo DB
-var url = process.env.MONGODB_URI || "mongodb://localhost/" + databaseUrl
-mongoose.connect(url)
-
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-// ROUTES
+// Database configuration
+// var databaseUrl = "NYTscraper";
+// var collections = ["NYTscrapedData"];
 
-// app.get("/app.js", function (req, res) {
-//     // console.log(res);
-//     res.sendFile(path.join(__dirname, "./public/app.js"));
-// });
+// Connect to the Mongo DB
+// var url = process.env.MONGODB_URI || "mongodb://localhost/" + databaseUrl
+// mongoose.connect(url)
+
+
+var db = process.env.MONGODB_URI || "mongodb://localhost/NYTscraper";
+
+mongoose.connect(db, function (error) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("====> Mongoose connection is successful <====");
+    }
+});
+
+
+
+// ROUTES
 
 app.get("/", function (req, res) {
     // console.log(res);
@@ -84,12 +82,12 @@ app.get("/scrape", function (req, res) {
 
 
             // ============================================
-            // Headline - the title of the article
+            // Headline - the headline of the article
             // Summary - a short summary of the article
             // URL - the url to the original article
 
             //  HEADLINE
-            var title = $(element).find("h2").text();
+            var headline = $(element).find("h2").text();
 
             // Grab the URL of the article
             var link = $(element).find("a").attr("href");
@@ -98,12 +96,12 @@ app.get("/scrape", function (req, res) {
             var sum = $(element).find("p").text();
 
 
-            console.log("Title:" + title, "Link:" + link, "Sum:" + sum);
-            // If this found element had both a title and a link
-            if (title && link && sum) {
+            console.log("headline:" + headline, "Link:" + link, "Sum:" + sum);
+            // If this found element had both a headline and a link
+            if (headline && link && sum) {
                 // Insert the data in the scrapedData db
                 db.NYTscrapedData.insert({
-                    title: title,
+                    headline: headline,
                     link: link,
                     sum: sum
                 },
@@ -143,7 +141,7 @@ app.get("/scrape", function (req, res) {
 
 
 app.listen(PORT, function () {
-    console.log("App listening http://localhost:" + PORT);
+    console.log("!!!! ====> App listening http://localhost:" + PORT + " <==== !!!!");
 
 
 });
