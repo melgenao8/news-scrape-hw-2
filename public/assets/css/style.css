@@ -1,0 +1,101 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 80px;
+  background-color: #ffffff;
+}
+
+.card a:not([href]):not([tabindex]).scrape-new {
+  color: #2b2b2b;
+}
+
+
+.navbar {
+  margin-bottom: 0;
+}
+
+
+.article-container {
+  padding-bottom: 25px;
+}
+
+.card {
+  border-radius: 0;
+  margin: 20px 0;
+}
+
+.card .card-header {
+  background-color: #0f0f0f;
+  position: relative;
+  padding-top: 30px;
+}
+
+.card .card-header h3 {
+  color: white;
+}
+
+.card .card-header .btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.card .card-header .btn.delete {
+  right: 160px;
+}
+
+.card .card-body {
+  font-size: 16px;
+}
+
+.card .card-header .article-link {
+  color: white;
+  display: inline-block;
+  width: 80%;
+}
+
+
+.navbar-nav > li > a.scrape-new,
+.navbar-nav > li > a.clear {
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-weight: 800;
+  color: white;
+}
+
+.navbar-nav > li > a.scrape-new:hover,
+.navbar-nav > li > a.clear:hover {
+  background: #4caf50;
+}
+
+.navbar-nav > li > a.scrape-new:active {
+  background: #23235e;
+}
+
+.scrape-new {
+  cursor: pointer;
+}
+
+.m-top-80 {
+  margin-top: 80px;
+}
+
+textarea {
+  padding: 10px;
+  resize: none;
+  width: 100%;
+}
+
+.bootbox-body .btn {
+  float: right;
+  margin: 5px;
+}
+
+.note.list-group-item .btn {
+  position: relative;
+  bottom: 10px;
+}

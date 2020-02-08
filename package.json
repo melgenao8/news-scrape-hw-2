@@ -1,29 +1,18 @@
 {
-  "name": "news-scrape-hw",
+  "name": "mongo_homework",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/melgenao8/news-scrape-hw.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/melgenao8/news-scrape-hw/issues"
-  },
-  "homepage": "https://github.com/melgenao8/news-scrape-hw#readme",
   "dependencies": {
-    "axios": "^0.19.2",
-    "body-parser": "^1.19.0",
-    "cheerio": "^1.0.0-rc.3",
-    "cherio": "^1.0.0-rc.2",
-    "express": "^4.17.1",
-    "express-handlebars": "^3.1.0",
-    "mongojs": "^3.1.0",
-    "mongoose": "^5.8.11"
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.1.6"
   }
 }
